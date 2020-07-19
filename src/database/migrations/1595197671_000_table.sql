@@ -1,0 +1,8 @@
+CREATE TABLE `updates` (
+    `id` INT(8) UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `app` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `platform` VARCHAR(32),
+    `url` VARCHAR(512) NOT NULL,
+    PRIMARY KEY (`id`)
+)
