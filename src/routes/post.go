@@ -35,7 +35,7 @@ func pushUpdate(c echo.Context) error {
 			Message: "Patch file was invalid or missing."})
 	}
 
-	src, err := file.Open()
+	src, err := f.Open()
 	defer src.Close()
 	if err != nil {
 		logger.Error().
@@ -55,13 +55,13 @@ func pushUpdate(c echo.Context) error {
 			Err(err).
 			Msg("Object Storage rejected putting the object.")
 
-		return c.JSON(http.InternalServerError, &struct {
+		return c.JSON(http.StatusInternalServerError, &struct {
 			Message string
 		}{
 			Message: "File could not be commited to disk."})
 	}
 
-	err := p.New()
+	err = p.New()
 	if err != nil {
 		logger.Error().
 			Err(err).
