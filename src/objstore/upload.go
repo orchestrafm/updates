@@ -14,7 +14,7 @@ func Upload(f io.Reader, fname string) (string, error) {
 
 	out, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(os.Getenv("AWS_S3_BUCKET")),
-		Key:    aws.String(os.Getenv(fname)),
+		Key:    aws.String(fname),
 		Body:   f,
 	})
 
