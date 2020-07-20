@@ -13,7 +13,8 @@ var session_ *session.Session
 func Login() {
 	sess, err := session.NewSession(
 		&aws.Config{
-			Region: aws.String(os.Getenv("AWS_S3_REGION")),
+			Region:   aws.String(os.Getenv("AWS_S3_REGION")),
+			Endpoint: aws.String(os.Getenv("AWS_ENDPOINT")),
 		})
 	if err != nil {
 		logger.Fatal().
