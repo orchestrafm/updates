@@ -8,7 +8,9 @@ import (
 	"github.com/spidernest-go/logger"
 )
 
-func Login() *session.Session {
+var session_ *session.Session
+
+func Login() {
 	sess, err := session.NewSession(
 		&aws.Config{
 			Region: aws.String(os.Getenv("AWS_S3_REGION")),
@@ -19,5 +21,5 @@ func Login() *session.Session {
 			Msg("Object Storage session failed to initialize.")
 	}
 
-	return sess
+	session_ = sess
 }

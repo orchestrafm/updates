@@ -5,13 +5,12 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/spidernest-go/logger"
 )
 
-func Upload(s *session.Session, f io.Reader, fname string) (string, error) {
-	uploader := s3manager.NewUploader(s)
+func Upload(f io.Reader, fname string) (string, error) {
+	uploader := s3manager.NewUploader(session_)
 
 	out, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(os.Getenv("AWS_S3_BUCKET")),
