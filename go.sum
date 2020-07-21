@@ -132,6 +132,10 @@ github.com/spidernest-go/migrate v0.0.0-20190604214622-8fccd3022231 h1:7fu82tjW9
 github.com/spidernest-go/migrate v0.0.0-20190604214622-8fccd3022231/go.mod h1:JB+D1LMxy26623XwlJ8CD86RNXTvynZEdYk4KWK6kg8=
 github.com/spidernest-go/mux v0.0.0-20200202234537-1b58c269dc0a h1:k69aH0L+bNI9cjkA5Il1cMZOQwd4XK62RgisNC7t6Zs=
 github.com/spidernest-go/mux v0.0.0-20200202234537-1b58c269dc0a/go.mod h1:YyBaSH3xgRWYrpXgIpzGcTuPhMekKhqv4HWxim9Rvtk=
+github.com/spidernest-go/mux v0.0.0-20200720235826-b8e5cd12864b h1:jgcJ1wfun1xLrduANtH7hLOvW+1kBTDuf6m3UCaW40c=
+github.com/spidernest-go/mux v0.0.0-20200720235826-b8e5cd12864b/go.mod h1:YyBaSH3xgRWYrpXgIpzGcTuPhMekKhqv4HWxim9Rvtk=
+github.com/spidernest-go/mux v0.0.0-20200721004946-90de384741e6 h1:Ehe9pBDMZufsief0NN7Rt1E2+nAyW6z2PZcdhAnDIEk=
+github.com/spidernest-go/mux v0.0.0-20200721004946-90de384741e6/go.mod h1:YyBaSH3xgRWYrpXgIpzGcTuPhMekKhqv4HWxim9Rvtk=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
