@@ -46,6 +46,7 @@ func ListenAndServe() {
 
 	// Start serving API routes
 	r = echo.New()
+	r.BodyLimit(32 * 1024 * 1024) // 32 MB
 
 	v0 := r.Group("/api/v0")
 	v0AuthReq := v0.Group("", middleware.JWTWithConfig(middleware.JWTConfig{
