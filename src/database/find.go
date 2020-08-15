@@ -7,12 +7,14 @@ import (
 	"github.com/spidernest-go/logger"
 )
 
-func SelectIDGreaterThan(id uint64) ([]*Patch, error) {
+func SelectIDGreaterThan(id uint64, app, platform string) ([]*Patch, error) {
 	updates := db.Collection("updates")
 	rp := updates.Find(orm.Cond{"id": orm.Gt(id)})
 	patches := *new([]*Patch)
 
-	err := rp.All(&patches)
+	err := rp.Where("app = " + app).
+		And("platform = " + platform).
+		All(&patches)
 	if err != nil && err != sql.ErrNoRows {
 		logger.Error().
 			Err(err).
