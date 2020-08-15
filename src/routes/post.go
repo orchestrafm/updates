@@ -10,12 +10,15 @@ import (
 )
 
 func pushUpdate(c echo.Context) error {
-	/* if err := FullAuthCheck(c); err != nil {
-	    logger.Info().
-	    Msg("user intent to push a patch, but was unauthorized.")
+	if authorized := HasRole(c, "create-update"); authorized != true {
+		logger.Info().
+			Msg("user intent to push a patch, but was unauthorized.")
 
-	    return err
-	}*/
+		return c.JSON(http.StatusUnauthorized, &struct {
+			Message string
+		}{
+			Message: ErrPermissions.Error()})
+	}
 
 	// Data Binding
 	p := new(database.Patch)
