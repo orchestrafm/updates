@@ -51,6 +51,21 @@ func pushUpdate(c echo.Context) error {
 			Message: "Signature file was invalid or missing."})
 	}
 
+	// Find Issuer
+	user := SelfAuthCheck(c)
+	err, pf := database.SelectProfileByUUID(user.Subject)
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Issuing user's profile could not be found.")
+
+		return c.JSON(http.StatusInternalServerError, &struct {
+			Message string
+		}{
+			Message: "Profile for issuing user went missing."})
+	}
+	p.Issuer = pf.ID
+
 	// Open Multipart Files
 	pmpf, err := fp.Open()
 	defer pmpf.Close()
