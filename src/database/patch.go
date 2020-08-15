@@ -7,7 +7,7 @@ type Patch struct {
 	Platform      string `db:"platform" json:"platform"`
 	Issuer        uint64 `db:"issuer" json:"issuer"`
 	URL           string `db:"url" json:"url"`
-	Hash          string `db:"url_hash" json:"hash"`
+	Hash          uint32 `db:"url_hash" json:"hash"`
 	Signature     string `db:"sig_url" json:"sig"`
-	SignatureHash string `db:"sig_url_hash" json:"sig_hash"`
+	SignatureHash uint32 `db:"sig_url_hash" json:"sig_hash"`
 }
