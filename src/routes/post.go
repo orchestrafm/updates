@@ -26,7 +26,7 @@ func pushUpdate(c echo.Context) error {
 	p.Name = c.FormValue("name")
 	p.Platform = c.FormValue("platform")
 
-	f, err := c.FormFile("patch")
+	fp, err := c.FormFile("patch")
 	if err != nil {
 		logger.Error().
 			Err(err).
@@ -38,8 +38,34 @@ func pushUpdate(c echo.Context) error {
 			Message: "Patch file was invalid or missing."})
 	}
 
-	src, err := f.Open()
-	defer src.Close()
+	fsi, err := c.FormFile("signature")
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Multipart Form data file is invalid or missing.")
+
+		return c.JSON(http.StatusNotAcceptable, &struct {
+			Message string
+		}{
+			Message: "Signature file was invalid or missing."})
+	}
+
+	// Open Multipart Files
+	pmpf, err := fp.Open()
+	defer pmpf.Close()
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Multipart Form data file is malformed.")
+
+		return c.JSON(http.StatusNotAcceptable, &struct {
+			Message string
+		}{
+			Message: "Patch file is malformed."})
+	}
+
+	smpf, err := fsi.Open()
+	defer smpf.Close()
 	if err != nil {
 		logger.Error().
 			Err(err).
@@ -64,6 +90,20 @@ func pushUpdate(c echo.Context) error {
 			Message: "File could not be commited to disk."})
 	}
 
+	url, err = objstore.Upload(smpf, fsi.Filename)
+	p.Signature = url
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Object Storage rejected putting the object.")
+
+		return c.JSON(http.StatusInternalServerError, &struct {
+			Message string
+		}{
+			Message: "File could not be commited to disk."})
+	}
+
+	// Submit Patch To Database
 	err = p.New()
 	if err != nil {
 		logger.Error().
