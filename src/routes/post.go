@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"hash/crc32"
 	"net/http"
 
 	"github.com/orchestrafm/updates/src/database"
@@ -77,7 +78,28 @@ func pushUpdate(c echo.Context) error {
 			Message: "Patch file is malformed."})
 	}
 
-	url, err := objstore.Upload(src, f.Filename)
+	// Check Hashes
+	crc32c := crc32.MakeTable(crc32.Castagnoli)
+	buf := *new([]byte)
+	_, err = pmpf.Read(buf)
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Patch file could not be read into memory.")
+	}
+	p.Hash = crc32.Checksum(buf, crc32c)
+
+	buf = *new([]byte)
+	_, err = smpf.Read(buf)
+	if err != nil {
+		logger.Error().
+			Err(err).
+			Msg("Signature patch file could not be read into memory.")
+	}
+	p.SignatureHash = crc32.Checksum(buf, crc32c)
+
+	// Upload Files
+	url, err := objstore.Upload(pmpf, fp.Filename)
 	p.URL = url
 	if err != nil {
 		logger.Error().
