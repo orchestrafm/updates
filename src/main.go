@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/orchestrafm/updates/src/database"
 	"github.com/orchestrafm/updates/src/objstore"
-	"github.com/orchestrafm/updates/src/routes"
+	"github.com/orchestrafm/updates/src/routers"
 	"github.com/spidernest-go/logger"
 )
 
@@ -19,5 +19,5 @@ func main() {
 
 	database.Synchronize()
 	objstore.Login()
-	routes.ListenAndServe()
+	routers.ListenAndServe()
 }
