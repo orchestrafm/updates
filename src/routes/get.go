@@ -22,7 +22,9 @@ func listUpdates(c echo.Context) error {
 			Message: "Version was not a valid number."})
 	}
 
-	p, err := database.SelectIDGreaterThan(ver)
+	app := c.FormValue("app")
+	platform := c.FormValue("platform")
+	p, err := database.SelectIDGreaterThan(ver, app, platform)
 	if err != nil {
 		logger.Error().
 			Err(err).
