@@ -27,6 +27,7 @@ func pushUpdate(c echo.Context) error {
 	p.Application = c.FormValue("app")
 	p.Name = c.FormValue("name")
 	p.Platform = c.FormValue("platform")
+	p.Architecture = c.FormValue("architecture")
 
 	fp, err := c.FormFile("patch")
 	if err != nil {
@@ -106,7 +107,11 @@ func pushUpdate(c echo.Context) error {
 	p.SignatureHash = crc32.Checksum(buf.Bytes(), crc32c)
 
 	// Upload Files
-	url, err := objstore.Upload(pmpf, fp.Filename)
+	url, err := objstore.Upload(pmpf, "/Patches/Effective/"+
+		p.Application+"/"+
+		p.Platform+"/"+
+		p.Architecture+"/"+
+		fp.Filename, "public-read", true)
 	p.URL = url
 	if err != nil {
 		logger.Error().
@@ -119,7 +124,11 @@ func pushUpdate(c echo.Context) error {
 			Message: "File could not be commited to disk."})
 	}
 
-	url, err = objstore.Upload(smpf, fsi.Filename)
+	url, err = objstore.Upload(smpf, "/Patches/Effective/"+
+		p.Application+"/"+
+		p.Platform+"/"+
+		p.Architecture+"/"+
+		fsi.Filename, "public-read", true)
 	p.Signature = url
 	if err != nil {
 		logger.Error().
@@ -145,7 +154,7 @@ func pushUpdate(c echo.Context) error {
 			Message: "Patch was not written to the database."})
 	}
 
-	return c.JSON(http.StatusOK, &struct {
+	return c.JSON(http.StatusCreated, &struct {
 		Message string
 	}{
 		Message: "Patch uploaded successfully."})
