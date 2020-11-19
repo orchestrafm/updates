@@ -9,11 +9,12 @@ import (
 
 func SelectIDGreaterThan(id uint64, app, platform string) ([]*Patch, error) {
 	updates := db.Collection("updates")
-	rp := updates.Find(orm.Cond{"id": orm.Gt(id)})
+	rp := updates.Find()
 	patches := *new([]*Patch)
 
-	err := rp.Where("app = " + app).
-		And("platform = " + platform).
+	err := rp.Where("app = ", app).
+		And("platform = ", platform).
+		And(orm.Cond{"id": orm.Gt(id)}).
 		All(&patches)
 	if err != nil && err != sql.ErrNoRows {
 		logger.Error().
