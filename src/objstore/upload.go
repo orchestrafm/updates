@@ -3,6 +3,7 @@ package objstore
 import (
 	"io"
 	"os"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -26,6 +27,14 @@ func Upload(f io.Reader, fname string, acl string, cdn bool) (string, error) {
 			Msg("File was unable to be put into Object Storage.")
 
 		return "", err
+	}
+
+	//HACK: there should be a better way to get the cdn url
+	if cdn == true {
+		out.Location = strings.Replace(out.Location,
+			"nyc3.digitaloceanspaces.com",
+			"nyc3.cdn.digitaloceanspaces.com",
+			1)
 	}
 
 	return out.Location, nil
