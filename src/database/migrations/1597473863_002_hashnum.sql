@@ -1,2 +1,2 @@
 ALTER TABLE `updates` MODIFY `url_hash` INT UNSIGNED NOT NULL,
-MODIFY `sig_url_hash` INT UNSIGNED NOT NULL;
+	MODIFY `sig_url_hash` INT UNSIGNED NOT NULL;

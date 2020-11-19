@@ -1,0 +1,1 @@
+ALTER TABLE `updates` ADD `arch` VARCHAR(32) NOT NULL;
