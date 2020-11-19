@@ -9,13 +9,15 @@ import (
 	"github.com/spidernest-go/logger"
 )
 
-func Upload(f io.Reader, fname string) (string, error) {
+func Upload(f io.Reader, fname string, acl string, cdn bool) (string, error) {
 	uploader := s3manager.NewUploader(session_)
 
 	out, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(os.Getenv("AWS_S3_BUCKET")),
-		Key:    aws.String(fname),
-		Body:   f,
+		Bucket:          aws.String(os.Getenv("AWS_S3_BUCKET")),
+		Key:             aws.String(fname),
+		Body:            f,
+		ACL:             aws.String(acl),
+		ContentEncoding: aws.String("brotli"),
 	})
 
 	if err != nil {
