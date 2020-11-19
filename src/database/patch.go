@@ -10,4 +10,5 @@ type Patch struct {
 	Hash          uint32 `db:"url_hash" json:"hash"`
 	Signature     string `db:"sig_url" json:"sig"`
 	SignatureHash uint32 `db:"sig_url_hash" json:"sig_hash"`
+	Architecture  string `db:"arch" json:"arch"`
 }
