@@ -12,7 +12,7 @@ import (
 )
 
 func pushUpdate(c echo.Context) error {
-	if authorized := HasRole(c, "create-update"); authorized != true {
+	if authorized := HasRole(c, "create-patch"); authorized != true {
 		logger.Info().
 			Msg("user intent to push a patch, but was unauthorized.")
 
